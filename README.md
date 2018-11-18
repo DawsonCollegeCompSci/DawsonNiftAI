@@ -1,7 +1,10 @@
-# DawsonNiftAI
+# Dawson NiftAI
 A collection of AI-related resources (exercises, presentations) suitable for college. Tribute to nifty.stanford.edu
 
 ## Contributing to this repository
+
+### Protected master branch
+The master branch is protected, meaning that only admins can merge pull requests. In order to contribution, checkout a new branch for your additions, then make a pull request. If you wish to propose additions or corrections, open an issue for discussion.
 
 ### File types
 All filetypes in this repo should be stored in plain text with markup (as opposed to a binary file like docx or pdf).
