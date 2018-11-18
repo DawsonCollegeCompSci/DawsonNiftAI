@@ -1,0 +1,147 @@
+[INCLUDE=presentation]
+Title         : Introduction to AI
+Sub Title     : 1- Basic concepts
+Author        : Jaya Nilakantan
+Affiliation   : Dawson College
+Email         : jnilakantan@dawsoncollege.qc.ca
+Reveal Theme  : night
+Beamer Theme  : singapore
+
+[TITLE]
+
+# What is AI?
+
+* AI is any form of intelligence exhibited by machines.
+* An "intelligent agent" is any device that perceives its environment and 
+takes actions that maximize its chance of success at some goal.
+* intelligent agents are capable of **planning** sequences of decisions, **reasoning**
+ about the world around them, and **learning** from experience.
+
+
+# AI vs Machine Learning vs Deep Learning
+![nvidia]
+
+[nvidia]: images/nvidia.jpg "AIvsMLvsDL, nvidia blog, Michael Copeland" { width:100%; }
+
+# Timeline
+![Deep_Learning]
+
+[Deep_Learning]: images/Deep_Learning.png "AIvsMLvsDL, nvidia blog, Michael Copeland" { width:auto; max-width:90% }
+
+# 3 Main Types of Machine Learning
+* **Supervised** learning: give lots of data, find model that allows you to generalize
+the data and predict or classify a new piece of data never seen before
+ - input data has many parameters (features) and the answer (label)
+ - Mathematical models to extrapolate from this data (e.g., line of best fit or linear regression,
+ k-nearest-neighbours)
+
+* **Unsupervised** learning: give lots of data, try to similarities in data
+ - input data is not labelled, trying to find classifications/clusters/similarities based on the features
+ 
+* **Reinforcement** learning: give the algorithm rewards if it wins, let it try by trial and error and learn from its mistakes
+
+# Supervised vs Unsupervised vs Reinforcement
+![mod1_SuperUnsuper]
+![reinf]
+
+[reinf]: images/reinf.png "reinf" { width:auto; max-width:30% }
+
+[mod1_SuperUnsuper]: images/mod1_SuperUnsuper.png "mod1_SuperUnsuper" { width:auto; max-width:60%; }
+Source: http://beta.cambridgespark.com/courses/jpm/01-module.html
+Source: http://enhancedatascience.com/2017/07/19/machine-learning-explained-supervised-learning-unsupervised-learning-and-reinforcement-learning/
+
+# Quiz: Supervised or Unsupervised or Reinforcement?
+Facial recognition
+
+![mod1_faces]
+
+[mod1_faces]: images/mod1_faces.png "mod1_faces" { width:auto; max-width:90%; align:center }
+Source: http://beta.cambridgespark.com/courses/jpm/01-module.html
+
+# Quiz: Supervised or Unsupervised or Reinforcement?
+Classification of tissue samples
+
+![mod1_bc]
+
+[mod1_bc]: images/mod1_bc.jpg "mod1_bc" { width:auto; max-width:90% }
+Source: http://beta.cambridgespark.com/courses/jpm/01-module.html
+
+# Quiz: Supervised or Unsupervised or Reinforcement?
+Market segmentation
+
+![segmentation]
+
+[segmentation]: images/segmentation.png "segmentation" { width:auto; max-width:90% }
+https://c.ymcdn.com/sites/dema.site-ym.com/resource/resmgr/Member_Resources/Lifestage_Clustering.pdf
+
+# Quiz: Supervised or Unsupervised or Reinforcement?
+![alphago2]
+
+[alphago2]: images/alphago2.png "alphago2" { width:auto; max-width:90% }
+
+Source: https://www.popularmechanics.com/technology/a19863/googles-alphago-ai-wins-second-game-go/
+
+# Why is AI everywhere?
+
+* lots of data
+* lots of compute power
+* developments and breakthroughs in algorithms and research
+
+# Example application
+How about an application that alerts the public to high crime areas?
+
+* Montreal releases [data] about crimes and where the occur (the the nearest intersection)
+* there are already [visualization] apps
+* wouldn't it be in the public interest to provide a map that warns people if they enter a high crime area?
+
+[data]: https://ville.montreal.qc.ca/vuesurlasecuritepublique/
+[visualization]: https://newsinteractives.cbc.ca/montreal-crime/ 
+
+# What could possibly go wrong?
+
+ML is based on past data. What are some problems with using past data for predictive apps?
+
+* any biases in the data will cause biased results
+* always ask yourself: is my data correct and representative?
+  + is the sample of data on which is train my models really representative?
+  + is there inherent bias in my data?
+  
+Most importantly *can the bias cause harm?*
+
+# Example - Amazon 
+
+
+```The team had been building computer programs since 2014 to review job 
+applicants’ resumes with the aim of mechanizing the search for top 
+talent...
+But by 2015, the company realized its new system was not rating 
+candidates for software developer jobs and other technical posts
+ in a gender-neutral way. ```
+
+![amazon]
+
+[amazon]: images/amazon.jpg "amazon" { width:auto; max-width:50% }
+
+ Source: https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G
+
+# What about our crime app?
+
+* crime stats can be biased: `Despite roughly equal usage rates, Blacks 
+are 3.73 times more likely than whites to be arrested for marijuana.`
+ 
+* "self-perpetuating": if people avoid all poor neighbourhoods, these neighbourhoods will become poorer 
+
+
+Sources: https://www.aclu.org/gallery/marijuana-arrests-numbers
+
+https://machinelearnings.co/artificial-intelligence-perpetuating-discrimination-36-52687110db94
+
+# How to move forward?
+
+* be aware of potential bias
+* counteract the bias
+* use tool like [FairML] to audit your algorithms
+
+You have power as a developer! Please be prudent!
+
+[FairML]: https://github.com/adebayoj/fairml
