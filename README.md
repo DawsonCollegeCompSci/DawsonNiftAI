@@ -1,5 +1,5 @@
 # Dawson NiftAI
-A collection of AI-related resources (exercises, presentations) suitable for college. Tribute to nifty.stanford.edu
+A collection of AI-related resources (exercises, presentations) suitable for college. Tip of the hat to nifty.stanford.edu
 
 ## Contributing to this repository
 
