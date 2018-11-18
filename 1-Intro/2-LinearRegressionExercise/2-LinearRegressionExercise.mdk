@@ -1,0 +1,219 @@
+[INCLUDE=style/acmart]
+Title       : Exercise - Simple Linear Regression
+Author      : Jaya Nilakantan
+Affiliation : Dawson College
+Email       : jnilakantan@dawsoncollege.qc.ca
+
+Logo          : True
+Bibliography  : example.bib
+Doc class     : [acmlarge]acmart.cls
+Bib Style     : style/acm-reference-format.bst
+
+
+~ HtmlOnly
+[TITLE]
+~
+
+
+~ TexOnly
+[TITLE]
+~
+
+
+# Introduction     { #sec-intro }
+In this exercise, we are introduced to both data sets and a simple first algorithm in supervised learning.
+
+Finding the line of best fit is one of the most intuitive algorithms in supervised learning. 
+We will use a simple dataset to visualize the concept, and then extarpolate to a slightly more complex dataset.
+
+## Recall: Supervised learning
+Supervised learning start with a set of labeled data (called *training* data) which is used to make a mathematical
+or statistical model. The model is used for either prediction or classification purposes.
+~Figure { #fig_predict; caption: "Predicting a value based on existing data"; page-align:top}
+![suplearning]
+~
+
+~Figure { #fig_classify; caption: "Classifying an object based on existing data"; page-align:top}
+![class]
+~
+In order to validate the model, *test* data is used. The test data is also real life data, that is chosen to properly
+reflect the different cases/demographics/conditions (called *features*) which are being looked at. Training and test data are important:
+they drive the correctness of the algorithm (the confidence with which you can make a conclusion).
+
+[suplearning]: images/suplearning.png "suplearning" { width:auto; max-width:90% }
+[class]: images/class.png "class" { width:auto; max-width:90% }
+
+## Where to find data?
+There are various places where you can find data to create and test models:
+
+* repositories of open data
+  + websites like Kaggle (kaggle.com)
+  + Microsoft Research open data (msropendata.com)
+  + government open data (e.g., donnees.ville.montreal.qc.ca)
+* APIs
+  + for example, Reddit, Stack Overflow, NY Times, Wikipedia, ...
+* web scraping
+
+In this exercise, we are using a dataset representing salary and years of experience, followed by a 
+dataset representing house prices.
+
+## Years of experience and salary
+We are using a simple dataset originally from the Stack Overflow salary calculator. Here is a subset of the data:
+~Figure { #fig_salary; caption: "Subset of Stack Overflow salary data"; page-align:top}
+
+![salary]
+~
+
+[salary]: images/salary.png "salary" { width:auto; max-width:90% }
+
+
+
+Based on this data, how would you predict the salary after 4 years experience? You would probably look for 
+a pattern: is the salary increasing by the same amount, or by some predictable amount ever year. You are
+looking for the line of best fit.
+
+The *features* are the variables that influence the result, or *label*. With supervised learning, given the right answer (label) for some data (features), 
+the algorithm is able to predict/classify a new set of data that it has never seen before with some level of 
+confidence. In this simple dataset, we have a single 
+feature, which is the years of experience, with the label being the salary. The increase of salary isn't a
+label, since it can be calculated from the yearly salary.
+
+What does the data look like?
+~Figure { #fig_chart; caption: "Scatter Chart of Stack Overflow salary data"; page-align:top}
+![chart]
+
+[chart]: images/chart.png "chart" { width:auto; max-width:90% }
+
+~
+
+Your instincts will tell you that there is a line that goes through this data, and any predicted 
+value will be close to this line with some margin of error. This is an example of a *regression problem*
+where both the input (features) and output (label) are continuous (e.g. numerical values, such as someone’s height or salary),
+ as opposed to discrete (e.g. classifying cats vs. dogs or classifying irises - a *classification problem*).
+
+## Line of best fit
+We want to create a *model* from the training data to use for future predictions. It is a straight line with
+a single feature. So it will have the form:
+~ Equation {#line}
+y = mx + b
+~
+
+Let's rewrite this equation in a different form
+
+~ Equation {#linearRegress}
+h_w(x) = w_0 + w_1x
+~
+where $h_w(x)$ represents the *hypothesis* or the prediction function regarding the salary. $w_0$ (the y-intercept, sometimes called the *bias*)
+ and $w_1$ (the slope, sometimes called the *weight* that we apply to the feature) change the straight line: they are the *parameters* to the model.
+
+So how do you solve for $w_0$ and $w_1$ to get the best fitting line? Consider these two options:
+~ Figure { #fig-compare; caption:"Best fit?"; page-align:top}
+![chart1]
+![chart2]
+
+[chart2]: images/chart2.png "chart2" { width:auto; max-width:90% }
+
+[chart1]: images/chart1.png "chart1" { width:auto; max-width:90% }
+~
+
+Figure [#fig-compare] shows what you know intuitively: the line of best fit is the one where 
+the sum of all the distances from the datapoints to the line is minimized.
+
+The training set (salary_data.csv) has 30 data points: we say $m$, which represents the number of training samples, is 30.
+
+The $x$'s are the input variable, or feature - in this case, the years of experience.
+
+The $y$'s are the output variable, or label. This is the target.
+
+So $(x, y)$ denotes a single training sample, and $(x^{(i)}, y^{(i)})$ denotes the i^th training sample (i will be between
+1 and 30). Notice that the superscript $^{(i)}$ represents which data point we are talking about, not an exponential! So
+$(x^{(2)}, y^{(2)})$ refers to the second data point (1.3, 46205).
+
+So how do we find the best line? There are many ways to solve linear regression with one variable problems.
+One used often is minimizing the Mean Squared Error.
+
+## Mean Squared Error 
+
+For each of the $i$ data points in our training set of size $m$, we’ll look at what our model 
+would hypothesize the output to be given the input i.e., $h_w(x^{(i)})$, where x is the years of experience
+versus the actual output (e.g. the actual salary, $y^{(i)}$ ), and calculate the difference between the
+two (the error). We then square the error to give an extra large penalty to very erroneous predictions
+ and then average these squared-errors over $m$.
+~ Figure { #fig-mse; caption:"Visualizing Squared Errors"; page-align:top}
+![mse]
+~
+[mse]: images/mse.gif "mse" { width:auto; max-width:90% }
+
+Our *objective* is to minimize the average of the MSE. In mathematical notation, the squared error of any point is:
+
+~ Equation {#se1point}
+( h_w(x^{(i)}) - y^{(i)} ) ^2
+~
+
+So the sum of all the squared errors is:
+
+~ Equation {#sumse}
+\sum_{n=1}^{m} ( h_w(x^{(i)}) - y^{(i)} ) ^2
+~
+
+And the average, or MSE is: (note, we added an extra 2 in the division just to simplify math in an upcoming step. The order of magnitude
+of the error when comparing with another error is unchanged)
+
+~ Equation {#mse}
+\frac{1}{2m} \sum_{n=1}^{m} ( h_w(x^{(i)}) - y^{(i)} ) ^2
+~
+
+We are trying to find the line which ends up minimizing the MSE. There are two values that define the line, 
+$w_0$ and $w_1$. So what we are trying to do is find the weights such that the MSE is the smallest.
+
+The math is getting complex. Instead of going through all the details of finding the optimized $w_0$ and $w_1$ (the
+technique is called *gradient descent*, which is a technique applied to multiple problems,
+not just linear regression), we will invoke some library functions.
+
+## PHP-ML
+
+PHP-ML is a machine learning library for PHP. Documentation is at: https://php-ml.readthedocs.io/en/latest/. 
+To use it:
+
+1. Install with Composer:
+
+```composer require php-ai/php-ml```
+
+2. Make sure you require the autoloader
+
+```
+  require_once __DIR__ . '/vendor/autoload.php';
+```
+3. Use it, and code away!
+
+```
+use Phpml\Regression\LeastSquares;
+
+$samples = [[60], [61], [62], [63], [65]]; //the x(i) data
+$targets = [3.1, 3.6, 3.8, 4, 4.1];  //the y(i) data
+
+$regression = new LeastSquares();
+$regression->train($samples, $targets);
+
+$regression->predict([64]);
+```
+## Exercise 1
+Read in the salary_data.csv file, train the LeastSquares algorithm, and predict the salary after 7 years of experience.
+
+## Exercise 2
+Read in the housingdata.txt file. This file represents house sale data in Pirtland. The first column 
+represents the square footage of the house, the second column represents the number of bedrooms, and the
+third column represents the price. Using this data, predict the price of a house with 1650 square feet and 3 bedrooms.
+
+
+# References {-}
+
+https://thenewstack.io/gentle-introduction-machine-learning/
+
+http://caisplusplus.usc.edu/blog/curriculum/lesson2
+
+https://php-ml.readthedocs.io/en/latest/
+
+https://www.kaggle.com/rohankayan/years-of-experience-and-salary-dataset
+
+https://www.kaggle.com/kennethjohn/housingprice
