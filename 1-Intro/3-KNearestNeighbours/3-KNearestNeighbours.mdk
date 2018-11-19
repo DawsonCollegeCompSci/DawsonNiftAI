@@ -64,7 +64,7 @@ In this exercise, we are using a famous data set, Fisher's *Iris* flower dataset
 [220px-Iris_versicolor_3]: images/220px-Iris_versicolor_3.jpg "220px-Iris_versicolor_3" { width:auto; max-width:90%; float:left; padding-right: 7px }
 
 &br;
-## Understanding a classification problem
+# Understanding a classification problem
 Consider the example where we ask students prior to taking a test how many hours they slept during the past 12 hours, and how many hours they studied during that same time.
 We then get pass/fail results from the test. The results might look something like this *sniff*:
 
@@ -77,7 +77,7 @@ We then get pass/fail results from the test. The results might look something li
 
 It is often easier to visualize the data through a chart. In this case, the colour legend indicates 
 if the student passed (blue) or failed (red).
-A new point is added - would you predict that this student passed or failed the exam?
+A new point $x$ is added - would you predict that this student passed or failed the exam?
 
 
 ~ Figure { #fig-passfail; caption:"Hours slept and studying vs result"; page-align:top}
@@ -87,7 +87,76 @@ A new point is added - would you predict that this student passed or failed the 
 [study]: images/study.PNG "study" { width:auto; max-width:90% }
 ~
 
-## Is this a 
+## Features and Labels
+Every data point in this dataset, just like the salary dataset and the housing prices dataset, has *features* (the variables that influence the result,
+i.e., hours studied and hours slept), as well as a *label* (the result). Your instincts in this case tell 
+you that the poor students probably failed - not because you were able to draw a line and extrapolate, but because you noticed *clusters*.
+With this dataset, each point is discrete. We use the data to try to classify the test data into a particular
+discrete class: a student can either pass or fail, noting else.
+
+## K-Nearest Neighbours algorithm
+You want to find out if the $x$ data point belongs to the Pass cluster or the Fail cluster. We basically want to see which
+other training data points it is close to, and guess its classification based on the neighbours. $k$ indicates the number of nearest neighbours you want to calculate to get the vote.
+Let's say we say that $k = 3$ for the dataset above. Which are the three closest neighbours to $x$?
+
+The easiest distance measure is *Euclidean*. Recall, in two dimensions, if point $p = (p_1, p_2)$ and point $q = (q_1, q_2)$,
+then distance between point $p$ and $q$ is:
+ 
+~ Equation {#euclid2D}
+d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}
+~
+
+More generally, when you have *n* dimensions (each representing a feature), then the Euclidean distance between 
+2 points is calculated as:
+ 
+~ Equation {#euclidnD}
+d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + ... + (p_n - q_n)^2}
+~
+
+We can use Euclidean distance to find the 3 closest example students to the student $x$ at $(4, 5)$ (4 hours studied, 5 hours slept).
+We see the three closest points are $(4, 7)$ (distance of 2), $(2, 5)$ (distance of 2), and $(7, 5)$ (distance of 3). Two out of
+3 neighbours fails, thuis we would predict that this students fails also.
+
+## How to choose $k$?
+
+**Question**: if the dataset contains $m$ datapoints, does it make sense for $k = m$ ? i.e., should every datapoint
+have a vote as a nearest neighbour?
+
+Answer: No! If you do that, you are giving a vote to all datapoints. So if you have an odd number of points, you will predict all
+to be one type or another
+
+**Question**: should I choose a small value, like $k=1$?
+
+Answer: No! Your algorithm may become to sensitive to noise/outliers in the data set
+
+There is in fact an optimal value of $k$: less that that value or more than that value leads to higher error rates (false classifications).
+
+## KNN pseudocode
+
+Load the data
+Initialise the value of $k$
+Iterate from 1 to $m$ (total number of training data points)
+        Calculate the Euclidean distance between test data and the training datapoint. 
+Sort the calculated distances in ascending order
+Get top k rows from the sorted list
+Count the most frequent classification of these rows
+       
+# Code in PHP
+Code the KNN algorithm by coding the following helper functions:
+
+```
+  /** Calculates and returns the Euclidean distance between two points. The points
+  are stored in an array, where the elements represent the value of the dimension. You
+  may assume that the indices are numeric starting at 0 with no gaps, and that both
+  arrays have the same number of elements
+  **/
+  function euclideanDistance (testpoint: array, datapoint:array)
+  
+  function sort ()
+```
+
+
+
 ## Iris flower dataset
 The flower dataset contains measurements of 3 different but related species of irises. For each species, there are 50
 flowers which were measured; and each flower had 4 attributes measured
@@ -104,3 +173,4 @@ http://archive.ics.uci.edu/ml/datasets/Iris
 
 http://caisplusplus.usc.edu/blog/curriculum-supplement/knn
 
+https://www.analyticsvidhya.com/blog/2018/03/introduction-k-neighbours-algorithm-clustering/
