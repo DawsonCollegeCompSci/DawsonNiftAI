@@ -1,0 +1,106 @@
+[INCLUDE=style/acmart]
+Title       : Exercise - K-Nearest Neighbours
+Author      : Jaya Nilakantan
+Affiliation : Dawson College
+Email       : jnilakantan@dawsoncollege.qc.ca
+
+Logo          : True
+Bibliography  : example.bib
+Doc class     : [acmlarge]acmart.cls
+Bib Style     : style/acm-reference-format.bst
+
+
+~ HtmlOnly
+[TITLE]
+~
+
+
+~ TexOnly
+[TITLE]
+~
+
+
+# Introduction     { #sec-intro }
+In this exercise, we are introduced to both data sets and a first algorithm in supervised learning. We will be using the famous Iris dataset
+for a first algorithm for classification.
+
+
+## Recall: Supervised learning
+Supervised learning start with a set of labeled data (called *training* data) which is used to make a mathematical
+or statistical model. The model is used for either prediction or classification purposes.
+~Figure { #fig_predict; caption: "Predicting a value based on existing data"; page-align:top}
+![suplearning]
+~
+
+[suplearning]: images/suplearning.png "suplearning" { width:auto; max-width:90% }
+
+~Figure { #fig_classify; caption: "Classifying an object based on existing data"; page-align:top}
+![class]
+
+[class]: images/class.png "class" { width:auto; max-width:90%;}
+~
+In order to validate the model, *test* data is used. The test data is also real life data, that is chosen to properly
+reflect the different cases/demographics/conditions (called *features*) which are being looked at. Training and test data are important:
+they drive the correctness of the algorithm (the confidence with which you can make a conclusion).
+
+
+## Where to find data?
+There are various places where you can find data to create and test models:
+
+* repositories of open data
+  + websites like Kaggle (kaggle.com)
+  + Microsoft Research open data (msropendata.com)
+  + government open data (e.g., donnees.ville.montreal.qc.ca)
+  + Classic data sets (list at https://en.wikipedia.org/wiki/Data_set#Classic_data_sets)
+* APIs
+  + for example, Reddit, Stack Overflow, NY Times, Wikipedia, ...
+* web scraping
+
+![220px-Iris_versicolor_3]
+In this exercise, we are using a famous data set, Fisher's *Iris* flower dataset used for classifying
+ irises. Fisher was a statistician and biologist who measured features on three related species of irises. Fun fact - there is a Quebec connection, 2 of the 3
+ species were measured from a pasture in the Gaspesie!
+
+[220px-Iris_versicolor_3]: images/220px-Iris_versicolor_3.jpg "220px-Iris_versicolor_3" { width:auto; max-width:90%; float:left; padding-right: 7px }
+
+&br;
+## Understanding a classification problem
+Consider the example where we ask students prior to taking a test how many hours they slept during the past 12 hours, and how many hours they studied during that same time.
+We then get pass/fail results from the test. The results might look something like this *sniff*:
+
+~ Figure { #fig-passfail; caption:"Hours slept and studying vs result"; page-align:top}
+![sleep]
+
+[sleep]: images/sleep.PNG "sleep" { width:auto; max-width:90% }
+
+~
+
+It is often easier to visualize the data through a chart. In this case, the colour legend indicates 
+if the student passed (blue) or failed (red).
+A new point is added - would you predict that this student passed or failed the exam?
+
+
+~ Figure { #fig-passfail; caption:"Hours slept and studying vs result"; page-align:top}
+![study]
+  
+
+[study]: images/study.PNG "study" { width:auto; max-width:90% }
+~
+
+## Is this a 
+## Iris flower dataset
+The flower dataset contains measurements of 3 different but related species of irises. For each species, there are 50
+flowers which were measured; and each flower had 4 attributes measured
+
+* sepal length
+* sepal width
+* petal length
+* petal width
+
+
+# References {-}
+
+http://archive.ics.uci.edu/ml/datasets/Iris
+
+http://caisplusplus.usc.edu/blog/curriculum-supplement/knn
+
