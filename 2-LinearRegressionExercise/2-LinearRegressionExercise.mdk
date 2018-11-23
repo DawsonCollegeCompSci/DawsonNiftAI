@@ -1,14 +1,7 @@
-[INCLUDE=style/acmart]
-Title       : Exercise - Simple Linear Regression
+Title       : Simple Linear Regression
 Author      : Jaya Nilakantan
 Affiliation : Dawson College
 Email       : jnilakantan@dawsoncollege.qc.ca
-
-Logo          : True
-Bibliography  : example.bib
-Doc class     : [acmlarge]acmart.cls
-Bib Style     : style/acm-reference-format.bst
-
 
 ~ HtmlOnly
 [TITLE]
@@ -29,11 +22,11 @@ We will use a simple dataset to visualize the concept, and then extrapolate to a
 ## Recall: Supervised learning
 Supervised learning starts with a set of labeled data (called *training* data) which is used to make a mathematical
 or statistical model. The model is used for either prediction or classification purposes.
-~Figure { #fig_predict; caption: "Predicting a value based on existing data"; page-align:top}
+~Figure { #fig_predict; caption: "Predicting a value based on existing data"; }
 ![suplearning]
 ~
 
-~Figure { #fig_classify; caption: "Classifying an object based on existing data"; page-align:top}
+~Figure { #fig_classify; caption: "Classifying an object based on existing data"; }
 ![class]
 ~
 In order to validate the model, *test* data is used. The test data has the same formatting as the training data, and is chosen to properly
@@ -60,12 +53,12 @@ dataset representing house prices.
 
 ## Years of experience and salary
 We are using a simple dataset originally from the Stack Overflow salary calculator. Here is a subset of the data:
-~Figure { #fig_salary; caption: "Subset of Stack Overflow salary data"; page-align:top}
+~Figure { #fig_salary; caption: "Subset of Stack Overflow salary data";}
 
 ![salary]
 ~
 
-[salary]: images/salary.png "salary" { width:auto; max-width:90% }
+[salary]: images/salary.png "salary" { width:auto; max-width:50% }
 
 
 
@@ -157,11 +150,13 @@ Our *objective* is to minimize the sum of the squares. In mathematical notation,
 We are trying to find the line which ends up minimizing the OLS. There are two values that define the line, 
 $w_0$ and $w_1$. So what we are trying to do is find the weights such that the OLS is the smallest.
 
-The estimate of the values of the 2 weights (a simple regression model) requires statistics. There are 
+The estimate of the values of the 2 weights (a simple regression model) requires a little calculus. There are 
 errors associated with the estimates, which tell you how confident you should be in the linear regression. 
-You can find the derivation of the following formulas [here]. 
+You can find the derivation of the following formulas [here]. A discussion around the standard error in the weights
+can be found [through this link].
 In the case of a simple linear regression model, the optimized $w_0$ and $w_1$ are calculated as:
 [here]:https://are.berkeley.edu/courses/EEP118/current/derive_ols.pdf
+[through this link]:http://mathworld.wolfram.com/LeastSquaresFitting.html
 ~ Equation {#beta}
 w_1 = \frac{m \sum x^{(i)} y^{(i)} - \sum x^{(i)} \sum y^{(i)}}
   {m \sum (x^{(i)})^2 - (\sum x^{(i)})^2}
