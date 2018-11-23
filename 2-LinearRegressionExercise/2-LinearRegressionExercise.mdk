@@ -133,7 +133,7 @@ would hypothesize the output to be given the input i.e., $h_w(x^{(i)})$, where x
 versus the actual output (e.g. the actual salary, $y^{(i)}$ ), and calculate the difference between the
 two (the *residual*). We then square the residual to give an extra large penalty to very erroneous predictions
  and then sum these squared-residuals.
-~ Figure { #fig-mse; caption:"Visualizing Squared Residuals"; page-align:top}
+~ Figure { #fig-mse; caption:"Visualizing Squared Residuals";}
 ![mse]
 
 [mse]: images/mse.png "mse" { width:auto; max-width:90% }
