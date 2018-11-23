@@ -157,15 +157,26 @@ can be found [through this link].
 In the case of a simple linear regression model, the optimized $w_0$ and $w_1$ are calculated as:
 [here]:https://are.berkeley.edu/courses/EEP118/current/derive_ols.pdf
 [through this link]:http://mathworld.wolfram.com/LeastSquaresFitting.html
+
 ~ Equation {#beta}
 w_1 = \frac{m \sum x^{(i)} y^{(i)} - \sum x^{(i)} \sum y^{(i)}}
   {m \sum (x^{(i)})^2 - (\sum x^{(i)})^2}
 ~
+which can be rewritten as:
+~ Equation {#betaAverage}
+  w_1 = \frac{\sum x^{(i)} y^{(i)} - m \bar{x}\bar{y}}
+  {\sum (x^{(i)})^2 - m \bar{x}^2}
+~
 
-and
+**and**
+
 
 ~ Equation {#alpha}
 w_0 = \frac{1}{m} \sum_{i=1}^{m} y^{(i)} - w_1 \frac{1}{m}\sum_{i=1}^{m} x^{(i)}
+~
+which can be rewritten as:
+~ Equation {#alphaAverage}
+  w_0 = \bar{y} - w_1 \bar{x}
 ~
 
 ## Exercise 1
