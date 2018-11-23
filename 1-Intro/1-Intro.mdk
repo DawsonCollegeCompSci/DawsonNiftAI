@@ -11,27 +11,12 @@ Beamer Theme  : singapore
 
 # What is AI?
 
-Some definitions from Morgan Stanley conference: The Power of Artificial Intelligence to
- Transform Business and Society
+* AI is any form of intelligence exhibited by machines.
+* An "intelligent agent" is any device that perceives its environment and 
+takes actions that maximize its chance of success at some goal.
+* intelligent agents are capable of **planning** sequences of decisions, **reasoning**
+ about the world around them, and **learning** from experience.
 
-# What is AI?
-
-* computer program that takes information from the world
-* manipulates the data, distills knowledge,
-* uses the knowledge to make decisions or predictions
-
-# What is AI?
-
-* making machines understand the world without explicitly programming for every eventuality
-
-# What is Artificial General Inteeligence
-* quest to understand the general principles and core capabilities of intelligence
-
-# What is AI?
-From Russell and Norvig:
-* Artificial intelligence is the study and design of intelligence agents
-where an intelligent agent is a system that perceives it's environment and
-takes actions that maximizes its chances of success.
 
 # AI vs Machine Learning vs Deep Learning
 ![nvidia]
@@ -44,22 +29,22 @@ takes actions that maximizes its chances of success.
 [Deep_Learning]: images/Deep_Learning.png "AIvsMLvsDL, nvidia blog, Michael Copeland" { width:auto; max-width:90% }
 
 # 3 Main Types of Machine Learning
-* Supervised learning: give lots of data, find model that allows you to generalize
+* **Supervised** learning: give lots of data, find model that allows you to generalize
 the data and predict or classify a new piece of data never seen before
  - input data has many parameters (features) and the answer (label)
  - Mathematical models to extrapolate from this data (e.g., line of best fit or linear regression,
  k-nearest-neighbours)
 
-* Unsupervised learning: give lots of data, try to similarities in data
+* **Unsupervised** learning: give lots of data, try to similarities in data
  - input data is not labelled, trying to find classifications/clusters/similarities based on the features
  
-* Reinforcement learning: give the algorithm rewards if it wins, let it try by trial and error and learn from its mistakes
+* **Reinforcement** learning: give the algorithm rewards if it wins, let it try by trial and error and learn from its mistakes
 
 # Supervised vs Unsupervised vs Reinforcement
 ![mod1_SuperUnsuper]
 ![reinf]
 
-[reinf]: images/reinf.png "reinf" { width:auto; max-width:50% }
+[reinf]: images/reinf.png "reinf" { width:auto; max-width:30% }
 
 [mod1_SuperUnsuper]: images/mod1_SuperUnsuper.png "mod1_SuperUnsuper" { width:auto; max-width:60%; }
 Source: http://beta.cambridgespark.com/courses/jpm/01-module.html
@@ -90,7 +75,6 @@ Market segmentation
 https://c.ymcdn.com/sites/dema.site-ym.com/resource/resmgr/Member_Resources/Lifestage_Clustering.pdf
 
 # Quiz: Supervised or Unsupervised or Reinforcement?
-AlphaGo
 ![alphago2]
 
 [alphago2]: images/alphago2.png "alphago2" { width:auto; max-width:90% }
@@ -100,7 +84,7 @@ Source: https://www.popularmechanics.com/technology/a19863/googles-alphago-ai-wi
 # Why is AI everywhere?
 
 * lots of data
-* lots of compute
+* lots of compute power
 * developments and breakthroughs in algorithms and research
 
 # Example application
@@ -126,23 +110,25 @@ Most importantly *can the bias cause harm?*
 
 # Example - Amazon 
 
-Amazon had to scrap an AI tool it was using for hiring decisions when it realized the tool had taught itself 
-to be biased against women.
+
+```The team had been building computer programs since 2014 to review job 
+applicants’ resumes with the aim of mechanizing the search for top 
+talent...
+But by 2015, the company realized its new system was not rating 
+candidates for software developer jobs and other technical posts
+ in a gender-neutral way. ```
 
 ![amazon]
 
-```The team had been building computer programs since 2014 to review job applicants’ resumes with the
- aim of mechanizing the search for top talent...But by 2015, the company realized its new system was 
- not rating candidates for software developer jobs and other technical posts in a gender-neutral way. ```
-
+[amazon]: images/amazon.jpg "amazon" { width:auto; max-width:50% }
 
  Source: https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G
 
-[amazon]: images/amazon.jpg "amazon" { width:auto; max-width:90% }
-
 # What about our crime app?
 
-* crime stats can be biased: `Despite roughly equal usage rates, Blacks are 3.73 times more likely than whites to be arrested for marijuana.`
+* crime stats can be biased: `Despite roughly equal usage rates, Blacks 
+are 3.73 times more likely than whites to be arrested for marijuana.`
+ 
 * "self-perpetuating": if people avoid all poor neighbourhoods, these neighbourhoods will become poorer 
 
 
@@ -156,6 +142,6 @@ https://machinelearnings.co/artificial-intelligence-perpetuating-discrimination-
 * counteract the bias
 * use tool like [FairML] to audit your algorithms
 
-The humble developer has more power available than every before: please be prudent!
+You have power as a developer! Please be prudent!
 
 [FairML]: https://github.com/adebayoj/fairml
