@@ -142,8 +142,11 @@ two (the *residual*). We then square the residual to give an extra large penalty
  and then sum these squared-residuals.
 ~ Figure { #fig-mse; caption:"Visualizing Squared Residuals"; page-align:top}
 ![mse]
+
+[mse]: images/mse.png "mse" { width:auto; max-width:90% }
+
 ~
-[mse]: images/mse.gif "mse" { width:auto; max-width:90% }
+
 
 Our *objective* is to minimize the sum of the squares. In mathematical notation, the squared residual of any point is:
 
