@@ -103,10 +103,14 @@ space efficiency: how much memory is required?
 # K-Nearest Neighbours
 ![sleep]
 
+[sleep]: images/sleep.PNG "sleep" { width:auto; max-width:90% }
+
+
 ![study]
 
-[study]: images/study.PNG "study" { width:auto; max-width:90%; padding-left: 10px; }
-[sleep]: images/sleep.PNG "sleep" { width:auto; max-width:90%; float: left; }
+[study]: images/study.PNG "study" { width:auto; max-width:90% }
+
+
 
 # K-Nearest Neighbours
 * Does new data point belong to the Pass cluster or the Fail cluster?
