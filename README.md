@@ -4,10 +4,9 @@ A collection of AI-related resources (exercises, presentations) suitable for col
 ## Contributing to this repository
 
 ### Protected master branch
-The master branch is protected, meaning that only admins can merge pull requests. In order to contribution, checkout a new branch for your additions, then make a pull request. If you wish to propose additions or corrections, open an issue for discussion.
+The master branch is protected, meaning that only admins can merge pull requests. In order to contribute, checkout a new branch for your additions, then make a pull request. If you wish to propose additions or corrections, open an issue for discussion.
 
-### File types
-All filetypes in this repo should be stored in plain text with markup (as opposed to a binary file like docx or pdf).
+### Filetypes
 
 #### Makado
 The .mdk file extension indicates that the document was written with Madoko (www.madoko.net and madoko.org) to get the simplicity of Markdown and the mathematical formatting of LaTeX.
