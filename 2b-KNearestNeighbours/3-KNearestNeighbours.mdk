@@ -298,9 +298,9 @@ Initialize value of k-fold
 Split test data into k-fold folds
 for each fold
   for loop to iterate through different values for knn's k
-    treat all remaining folds as test data
-    use the fold to validate: count the number of errors
-plot out the accuracy rate for each k -> choose the k with the smallest error
+    the iterating fold is the validation fold, all remaining folds are training data
+    use the data in the validation fold to count the number of errors
+print out the accuracy rate for each k 
 ```
 
 ## Exercise 4
