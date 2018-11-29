@@ -269,7 +269,48 @@ Use $k=1$, $k=3$ and $k=5$.
 PHP-ML provides a [KNearestNeighbours][knn]  implementation. Read the documentation, and change write an application that 
 trains and predicts the same unknown iris. Are your results the same?
 
+# Optimizing *k*
+As we saw in the quiz, the value of $k$ can greatly influence the response. There isn't a one-size-fits-all rule for determining the
+best value of $k$: it will depend on the data and the domain. A small value of k means that noise will have a higher influence on the result: imagine $k = 1$ and the datapoint tested is beside
+a single outlier. A large value of $k$ is computationally expensive and will result in worse performamnce as $k$ becomes to big.
 
+So the best way to tune $k$? You perform *cross-validation*. We keep a portion of our training set to tune the $k$ parameter.
+Why not just use the test data? Because test data is supposed to be used at the very end once we have tuned our model. If we use test data to tune the model,
+we won't really know how well the model performs with truly new data.
+
+So if our training sample has $m$ data points, then we want to set aside a portion of it for tuning: let's call this the *validation set*.
+A popular validation technique is called the *k-fold cross validation*. It is unfortunate that the variable $k$ is used again: the $k$ in *k-fold* has nothing to do with the $k$ in *knn*.
+With *k-fold cross-validation*, you will split your training sample into *k* samples of equal size: these are the *k-folds*. 
+One of the *k-folds* is used as a validation set to verify the accuracy of the knn algorithm, while the remaining $k-1$ folds
+are used for training. You repeat the training-accuracy calculation k times, with the validation set being a different fold each time.
+
+Visually:
+~Figure { #fig_kfold; caption: "k-fold cross validation";}
+![k_fold_cv]
+
+[k_fold_cv]: images/k_fold_cv.jpg "k_fold_cv" { width:auto; max-width:90% }
+
+~
+
+Pseudo-code:
+```
+Initialize value of k-fold
+Split test data into k-fold folds
+for each fold
+  for loop to iterate through different values for knn's k
+    treat all remaining folds as test data
+    use the fold to validate: count the number of errors
+plot out the accuracy rate for each k -> choose the k with the smallest error
+```
+
+## Exercise 4
+Split the iris dataset into 5 random folds with 10 irises each. Display the accuracy rate (number of errors/sample) for
+$k = 1$ upto $k = 7$.
+
+## Exercise 5
+Want a challenge? Read up on the [Breast Cancer Wisconsin Diagnostic] data set from UC Irvine. Use PHP-ML to run a *k-fold cross validation* to get the best k value.
+
+[Breast Cancer Wisconsin Diagnostic]: https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
 [knn]: https://php-ml.readthedocs.io/en/latest/machine-learning/classification/k-nearest-neighbors/] "KNearestNeighbours"
 
 # References {-}
@@ -281,3 +322,5 @@ http://caisplusplus.usc.edu/blog/curriculum-supplement/knn
 https://www.analyticsvidhya.com/blog/2018/03/introduction-k-neighbours-algorithm-clustering/
 
 https://www.analyticsvidhya.com/blog/2017/09/30-questions-test-k-nearest-neighbors-algorithm/
+
+https://kevinzakka.github.io/2016/07/13/k-nearest-neighbor/#more-on-k
