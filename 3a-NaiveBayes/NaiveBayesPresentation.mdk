@@ -1,18 +1,53 @@
 [INCLUDE=presentation]
-Title         : Demo presentation in Madoko
-Sub Title     : In both HTML and PDF
-Author        : Daan Leijen
-Affiliation   : Microsoft Research
-Email         : daan@microsoft.com
+Title         : Introduction to Naive Bayes Algorithm
+Sub Title     : 
+Author        : Jaya Nilakantan
+Affiliation   : Dawson College
+Email         : jnilakantan@dawsoncollege.qc.ca
 Reveal Theme  : sky
 Beamer Theme  : singapore
 
 [TITLE]
 
-# Content
+# Recap
+We've seen 2 algorithms thus far:
 
-[TOC]
+* Linear regression: used to predict a value based on a single feature. Assumes a continuous linear relationship
 
+* k-nearest neighbours: used to predict a classification based on feature(s). 
+
+Both algorithms are used with supervised learning: assumes labeled data
+
+# How to choose $k$ in knn?
+We saw that the knn algorithm is sensitive to the value of $k$
+
+Different results can occur depending on:
+
+* the distribution of the test data points
+
+* the value of $k$
+
+In other words, the accuracy of the results depends on the value of $k$. We need to _tune_ $k$ to acheive the optimal results (i.e., lowest error rates)
+
+# Optimizing $k$
+There isn't a general formula to determine the best value of $k$. Instead, you need to tune $k$ for each data set that you are 
+examining.
+
+The common methodology used is called *k-fold cross validation*
+
+The idea:
+
+* split your training data into a bunch of random, equal sized groups (called *folds*, there are *k* of them, but *k* refers to a
+different variable than the *k* in knn, ran out of letters I suppose!)
+
+* use one of the folds as the "validation" data, and the remaining folds as the "training" data: run through different values
+of k in knn, and assess the accuracy
+
+* repeat this for e
+
+# k-fold cross validation
+The idea: 
+$k$ is a variable that must be 
 # Madoko Presentation
 
 Using [Madoko] it is easy to create beautiful presentations.
