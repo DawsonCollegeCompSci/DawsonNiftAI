@@ -179,227 +179,97 @@ P(x_1, ... x_n \mid c) = P(x_1|c)⋅P(x_2|c)⋅⋅⋅P(x_n|c)
 
 ~ End Framed
 
-# So we can rewrite the Bayes equation:
+# So we can rewrite the Naive Bayes equation:
 
 ~ Begin Framed { padding:1ex; margin-top:1ex }
 
 ~ Math  {#eq-bayes-complex-2}
-P(c = j \mid x_1, ... x_n) = P(x_1|c = i)⋅P(x_2|c = i)⋅⋅⋅P(x_n|c = i) P(c = j)
+P(c \mid x_1, ... x_n) = P(x_1|c)⋅P(x_2|c)⋅⋅⋅P(x_n|c) P(c)
 ~
 ~ End Framed
 
-# Now consider the naive part
+Notice there is an issue: if the probability of any one term being in the class is zero, the entire term will multiply to 0. To protect us against this, we will use something called Laplace smoothing, which adds one.
+  
 
+# Let's look at an [example] 
 
+[example]: https://nlp.stanford.edu/IR-book/html/htmledition/naive-bayes-text-classification-1.html
+Consider this training set:
 
+| DocID | words                               | class |
+|:-----------|:------------------------------------|:------|
+| 1          | Chinese Beijing Chinese             | China |
+| 2          | Chinese Chinese Shanghai            | China |
+| 3          | Chinese Macao                       | China |
+| 4          | Tokyo Japan Chinese                 | not China |
+| 5          | Chinese Chinese Chinese Tokyo Japan | ?     |
 
+Document 1 to 4 are out training set. The words are the features $x$, and the class $c$ is China or Japan.
 
+How would we classify Document 5? China or Not China? Which has a higher probability?
 
+# Applying Naive Bayes
 
-
-
-
-
-
-Using [Madoko] it is easy to create beautiful presentations.
-
-* [Html][slide]:
-  Uses the `Reveal.js` library by [Hakim El Hattab](http://hakim.se).\
-  This slide demo in Madoko is an adaption of his online demo.
-* [Pdf][slide-pdf]:
-  Uses the `Beamer` package for LaTeX
-* [Source][slide-mdk]:
-  Click to see the source of this presentation.
-
-
-[madoko]: http://madoko.codeplex.com
-
-## Reveal.js
-
-`reveal.js` is a framework for easily creating beautiful presentations using
-HTML. You'll need a browser with support for CSS 3D transforms to see it in
-its full glory. 
-
-And any Madoko features just work. Here is some math:
-
+Remember:
 ~ Begin Framed { padding:1ex; margin-top:1ex }
-A famous equation is $e = mc^2$, but this one is 
-famous too:
-
-~ Equation  {#eq-gaussian}
-\int_{-\infty}^\infty e^{-a x^2} d x = \sqrt{\frac{\pi}{a}} 
+~ Math  {#eq-bayes-complex-2}
+P(c \mid x_1, ... x_n) = P(x_1|c)⋅P(x_2|c)⋅⋅⋅P(x_n|c) P(c)
 ~
 ~ End Framed
 
-~~ Notes
-Oh hey, these are some notes. They'll be hidden in your presentation, but you
-can see them if you open the speaker notes window (hit 's' on your keyboard).
-~~
-
-## Code
-
-Here is code, highlighted by Madoko 
-
-``` javascript
-function sqr( x ) {
-  var \(&pi;\) = 3.141593;
-  return x*x;  /* the square */
-}
+or 
 ```
-We used `\(` and `\)` to escape into markdown to write &pi;.
+ P(China | "Chinese Chinese Chinese Tokyo Japan" ) 
+   = P("Chinese"|China)⋅P("Chinese"|China)⋅P("Chinese"|China)⋅ 
+   P("Tokyo"|China)⋅P("Japan"|China)⋅ P(China) 
+```
+```
+P(China) = 3/4 since 3/4 training documents are classified as China
+P("Chinese"|China) = (5 occurrences of "Chinese" associated with class China
+  plus 1 for Laplace smoothing)/ 
+  (8 terms associated with class China + overall vocabulary of 6 unique words)
+  = 6/14
+P("Tokyo" | China) = 0 occurrences of "Tokyo" associated with class China
+  plus 1 for Laplace smoothing)/ 
+  (8 terms associated with class China + overall vocabulary of 6 unique words)
+  = 1/14
+P("Japan" | China) = 0 occurrences of "Japan" associated with class China
+  plus 1 for Laplace smoothing)/ 
+  (8 terms associated with class China + overall vocabulary of 6 unique words)
+  = 1/14
+  
+```
+# China or Not China
 
-<!-- Example of nested vertical slides -->
-~ Begin Vertical { data-background:Gainsboro }
+P(China | Doc 5) = $(6/14)^3 * 1/14 * 1/14 * 3/4$ ~= 0.0003
 
-## Vertical Slides {#vertical}
-Slides can be nested inside of other slides,
-try pressing [down].
+<br/>
+You can verify on your own:
 
-[![arrowdown]][down]
+P(Not China | Doc 5) = $(2/9)^3 * 2/9 * 2/9 * 1/4$ ~= 0.0001
 
+Thus the Naive Bayes classifier will assign "China" as the class for the text since the probability is higher
 
-[down]: # { .navigate-down }
-[arrowdown]: images/arrow.png "Down arrow" { width:178px; height:238px }
+# Working with a real example
 
-## Basement Level 1
-Press down or up to navigate.
+[NY Times] offers a wonderful set of APIs to beautiful labelled data. 
 
-## Basement Level 2
+Get an API key, and play around. I am using data extracted previously (by [Hilary Mason]) that has 50 article snippets related tp Arts, and 50 related to Sports.
 
-Use `columns` to put blocks next to each other:
+You will use these as training data for a Naive Bayes classifier, which takes a sentence and decides if it is more
+likely to be Arts-related or Sports-related
 
-~ Begin Columns
-~ Column { width:50% }
-A monarch butterfly (shown to the right)
-spends the winter in Mexico.
-~
-~ Column
-![butterfly]
-~
-~ End Columns
+[NY Times]: https://developer.nytimes.com/
+[Hilary Mason]: https://github.com/hmason/ml_class/tree/master/intro_web_data
 
-[butterfly]: images/butterfly.png "A Monarch butterfly" { width:280px; vertical-align:middle }
+# Pseudo code
 
-
-<!-- 
-For local background images, we need to have a reference to the image
-such that it's data gets embedded into the HTML page. We define
-it using "display=none" so it is hidden in the presentation. 
-We can then refer to the image in "data-background-image". 
--->
-
-![bfly]
-[bfly]: images/butterfly.png "Butterfly" { display:none }
-
-## Basement Level 3 { data-background-image:images/butterfly.png }
-That's it, time to go back up.
-
-[![arrowup]][back2]
-
-[arrowup]:  images/arrow.png "Up arrow" { width:178px; height:238px; transform:rotate(180deg) }
-[back2]:    #vertical { .image }
-
-~ End Vertical
-
-
-## Themes {#themes}
-
-Reveal.js comes with a few themes built in:
-
-* [Default](?#/themes)
-* [Sky](?theme=sky#/themes)
-* [Beige](?theme=beige#/themes)
-* [Serif](?theme=serif#/themes)
-* [Simple](?theme=simple#/themes)
-* [Night](?theme=night#/themes)
-* [Moon](?theme=moon#/themes)
-* [Solarized](?theme=solarized#/themes)
-
-Theme demos are loaded after the presentation which leads to flicker. In
-production you should load your theme in the `<head>` using a
-`<link>`.
-
-## Transitions { #transitions }
-
-You can select from different transitions, like:\
-[Cube](?transition=cube#/transitions) -
-[Page](?transition=page#/transitions) -
-[Concave](?transition=concave#/transitions) -
-[Zoom](?transition=zoom#/transitions) -
-[Linear](?transition=linear#/transitions) -
-[Fade](?transition=fade#/transitions) -
-[None](?transition=none#/transitions) -
-[Default](?#/transitions)
+$P(Arts) = P(Sports) = 0.5$ 
+since we chose equal number of articles. If this is not a good assumption, we should
+rethink our training data.
 
 
 
-## Pauses?
-
-Some pauses.
-
-* {.fragment} One
-* {.fragment} Two
-* {.fragment} Three
-
-And more:
-
-- Test 1
-- Test 2
-- Test 3
-{.fragmented}
-
-Cool!.
-
-~ Slide
-A slide with no header
-~
-
-
-## Point of View
-
-In Reveal.js Press **ESC** to enter the slide overview.
-
-Hold down alt and click on any element to zoom in on it using 
- [zoom.js]. Alt + click anywhere to zoom back out.
-
-
-[zoom.js]: http://lab.hakim.se/zoom-js
-
-
-## Works in Mobile Safari
-
-Try it out! You can swipe through the slides and pinch your way to the
-overview.
-
-
-## Printing
-
-You can print a `revealjs` presentation nicely from the browser.
-
-First give the `?print-pdf` or `?print-paper` query on your final
-presentation (in the browser address bar) and then print from the Chrome
-browser selecting `Save to PDF`.
-
-Read more about it at the [revealjs documentation](https://github.com/hakimel/reveal.js#pdf-export)
-
-## RevealJS library
-
-Normally, the `revealjs` library is loaded from a CDN but you can specify your
-own url using metadata:
-
-    Reveal Url: <my url>
-
-This can be useful when using a [server to run revealjs](https://github.com/hakimel/reveal.js#full-setup)
-where you may use something like:
-
-    @nopreview Reveal Url: http://localhost:8000/reveal.js
-
-
-## Thanks for looking :-)
-
-[slide]: http://research.microsoft.com/en-us/um/people/daan/madoko/samples/slidedemo/out/slidedemo.html
-[slide-mdk]: https://www.madoko.net/editor.html?#url=http://research.microsoft.com/en-us/um/people/daan/madoko/samples/slidedemo/slidedemo.mdk&options={"delayedUpdate":"true"}
-[slide-pdf]: http://research.microsoft.com/en-us/um/people/daan/madoko/samples/slidedemo/out/slidedemo.pdf
 
 # References {-}
 
@@ -412,4 +282,8 @@ https://nlp.stanford.edu/IR-book/html/htmledition/naive-bayes-text-classificatio
 https://srdas.github.io/MLBook/BayesModels.html#bayes-classifier
 
 https://en.wikipedia.org/wiki/Law_of_total_probability
+
+https://en.wikipedia.org/wiki/Naive_Bayes_classifier
+
+https://github.com/hmason/ml_class/tree/master/intro_web_data
 
