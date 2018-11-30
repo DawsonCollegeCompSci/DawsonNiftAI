@@ -137,9 +137,9 @@ So the children are more likely to play outside.
 
 # Application to text classification?
 
-Let's say we want to classify e-mails into classes $c$ (e.g., spam, not spam)
+We want to classify e-mails into classes $c$ (e.g., spam, not spam)
 
-There are features $x_i$ (basically the words) that define e-mails 
+There are features $x_i$ (the words) that define e-mails 
 
 We know the unconditional probabilities $P(c)$ for each class
 
@@ -150,7 +150,7 @@ We know the conditional probability $P(x_i \mid c)$ for each feature and class
 
 * this is the frequency of the occurrence of the word in each class
 
-* we interpret this as a measure of how much evidence that particular feature contributes to $c$ being the correct class
+* this is a measure of how much evidence that particular feature contributes to $c$ being the correct class
 
 # Calculation of $P(c \mid x)$
 
@@ -163,7 +163,7 @@ The calculation of the conditional probability that the class is $c$, given the 
 P(c \mid x_1, x_2, ... x_n) = \frac{P(x_1,x_2, ... x_n \mid c) \, P(c)}{P(x_1,x_2, ... x_n)}
 ~
 
-Notice the denominator doesn't depend on the class, and is effectively constant when I am comparing is a
+Notice the denominator doesn't depend on the class, and is effectively constant when I am comparing if a
 text belongs to one class or another. So we can ignore it since it doesn't change which class will have the
 higher **relative** probability
 
@@ -215,7 +215,7 @@ P(c \mid x_1, ... x_n) = P(x_1|c)⋅P(x_2|c)⋅⋅⋅P(x_n|c) P(c)
 Note 1: We removed the denominator, which was less that 1 in most cases. This will make our probability estimate smaller than it really is. We don't
 mind since we are comparing between 2 option for the higher _relative_ value
 
-Note 2: there is an issue: if the probability of any one term being in the class is zero, the entire term will multiply to 0. To protect us against this, we will use something called Laplace smoothing, which adds one.
+Note 2: if the probability of any one term being in the class is zero, the entire term will multiply to 0. To protect us against this, we will use something called *Laplace smoothing*, which adds one.
   
 
 # Let's look at an [example] 
@@ -283,7 +283,7 @@ Thus the Naive Bayes classifier will assign "China" as the class for the text si
 [NY Times] offers a wonderful set of APIs to beautiful labelled data. 
 
 Get an API key, and play around. I am using data extracted previously (by [Hilary Mason]) that has 47
- article snippets related tp Arts, and 47 related to Sports.
+ article snippets related to Arts, and 47 related to Sports.
 
 You will use these as training data for a Naive Bayes classifier, which takes a sentence and decides if it is more
 likely to be Arts-related or Sports-related
@@ -295,7 +295,9 @@ likely to be Arts-related or Sports-related
 
 $P(Arts) = P(Sports) = 0.5$ 
 since we chose equal number of articles. If this is not a good assumption, we should
-rethink our training data.
+rethink our training data. 
+
+Since they are the same, we can ignore it in our relative probability calculations.
 
 ## Training
 
@@ -309,7 +311,7 @@ Fill two associate arrays, one for arts, one for sport.
 
 * PHP arrays are hashmaps internally, so we will have O(1) access time later
 
-* no need to sort at training
+* no need to sort
 
 Count the number of words associated with Arts: sum of all values
 
@@ -319,11 +321,12 @@ Count the overall number of unique words in the training set: count of all keys
 
 ## Testing
 
-Separate the text into words
+Separate the sentence into words
 
 Sum the frequency of the words in Arts plus 1
 
 Sum the frequency of the words in Sports plus 1
+
 
 Use these to calculate which has a higher probability
 
@@ -335,6 +338,12 @@ You provide the training data as an array: so you will have to split the sentenc
 Training can be done in multiple steps so use a loop.
 
 Once the system is trained, you can predict with an array of the features of the sentence.
+
+# Remember the assumptions with Naive Bayes
+
+1. each feature is independant of the other
+
+2. the probability of a future conditional event is **estimated** by the frequency of past events
 
 # References {-}
 
