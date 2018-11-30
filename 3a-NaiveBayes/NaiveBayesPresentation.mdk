@@ -141,7 +141,7 @@ P(c \mid x_1, x_2, ... x_n) = \frac{P(x_1,x_2, ... x_n \mid c) \, P(c)}{P(x_1,x_
 
 Notice the denominator doesn't depend on the class, and is effectively constant when I am comparing is a
 text belongs to one class or another. So we can ignore it since it doesn't change which class will have the
-higher probability
+higher **relative** probability
 
 ~ End Framed
 
@@ -188,7 +188,10 @@ P(c \mid x_1, ... x_n) = P(x_1|c)⋅P(x_2|c)⋅⋅⋅P(x_n|c) P(c)
 ~
 ~ End Framed
 
-Notice there is an issue: if the probability of any one term being in the class is zero, the entire term will multiply to 0. To protect us against this, we will use something called Laplace smoothing, which adds one.
+Note 1: We removed the denominator, which was less that 1 in most cases. This will make our probability estimate smaller than it really is. We don't
+mind since we are comparing between 2 option for the higher _relative_ value
+
+Note 2: there is an issue: if the probability of any one term being in the class is zero, the entire term will multiply to 0. To protect us against this, we will use something called Laplace smoothing, which adds one.
   
 
 # Let's look at an [example] 
@@ -250,6 +253,30 @@ P(Not China | Doc 5) = $(2/9)^3 * 2/9 * 2/9 * 1/4$ ~= 0.0001
 
 Thus the Naive Bayes classifier will assign "China" as the class for the text since the probability is higher
 
+# Another [example 2]
+Based on the weather (feature), the kids either played outside or not (class). We have collected past data, and want to predict the likelihood of them playing outside given the weather.
+
+![Capture]
+
+1. What are the overall frequencies for each class?
+2. What are the probabilities for each class P(c)
+
+[Capture]: images/Capture.PNG "Capture" { width:auto; max-width:90% }
+
+# Continuing [example 2]
+If it is sunny, will the kids play outside?
+~ Math
+\begin{aligned}
+P(Yes | Sunny) &= P (Sunny | Yes) * P (Yes) \\
+&= ((3+1)/9) * (9/14) = 0.285\\
+P(No | Sunny) &= P (Sunny | No) * P (No) \\
+&= ((2+1)/5) * (5/14) = 0.214
+\end{aligned}
+~
+So the children are more likely to play outside.
+
+[Example 2]: https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/
+
 # Working with a real example
 
 [NY Times] offers a wonderful set of APIs to beautiful labelled data. 
@@ -275,6 +302,7 @@ Count the number of words associated with Sports
 Counts the overall number of unique words in the training set
 
 For every word in the entered sentence: count the occurences in Arts plus 1
+
 Repeat for Sports
 
 Use these to calculate which has a higher probability
@@ -301,6 +329,8 @@ https://srdas.github.io/MLBook/BayesModels.html#bayes-classifier
 https://en.wikipedia.org/wiki/Law_of_total_probability
 
 https://en.wikipedia.org/wiki/Naive_Bayes_classifier
+
+https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/
 
 https://github.com/hmason/ml_class/tree/master/intro_web_data
 
