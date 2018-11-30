@@ -262,14 +262,31 @@ likely to be Arts-related or Sports-related
 [NY Times]: https://developer.nytimes.com/
 [Hilary Mason]: https://github.com/hmason/ml_class/tree/master/intro_web_data
 
-# Pseudo code
+# NB Pseudo code
 
 $P(Arts) = P(Sports) = 0.5$ 
 since we chose equal number of articles. If this is not a good assumption, we should
 rethink our training data.
 
+Count the number of words associated with Arts
 
+Count the number of words associated with Sports
 
+Counts the overall number of unique words in the training set
+
+For every word in the entered sentence: count the occurences in Arts plus 1
+Repeat for Sports
+
+Use these to calculate which has a higher probability
+
+# Using PHP-ML
+
+The PHP Machine Learning library comes with a NaiveBayes Classifier class
+
+You provide the training data as an array: so you will have to split the sentences, with a matching labels array.
+Training can be done in multiple steps so use a loop.
+
+Once the system is trained, you can predict with an array of the features of the sentence.
 
 # References {-}
 
