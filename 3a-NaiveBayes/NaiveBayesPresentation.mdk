@@ -75,6 +75,7 @@ select the k with the best accuracy
 kNN classification assumes that similarity can be found be proximity. How can the vectors be formed so that 
 proximity is meaningful?
 
+<!--
 # Example - Bag of Words
 One way is to convert the text into associate arrays, where the word is the key, and the value is the frequency
 with which the word appeared in the text.
@@ -87,6 +88,7 @@ The array doesn't necessarily keep the order of the words, just the frequency.
 
 Terms which appear in a text and have a higher frequency in one class of bags over another 
 can be thought of as being closer to that bag.
+-->
 
 # Naive Bayes classifiers
 Naive Bayes classifiers are probabilistic classifiers
