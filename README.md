@@ -8,7 +8,7 @@ The master branch is protected, meaning that only admins can merge pull requests
 
 ### Filetypes
 
-#### Makado
+#### Madoko
 The .mdk file extension indicates that the document was written with Madoko (www.madoko.net and [madoko.org](https://madoko.org)) to get the simplicity of Markdown and the mathematical formatting of LaTeX.
 Use the online editor at madoko.net for editting and generating html or pdf documents. In the browser, select Save to..., choose GitHub (which will push directly to GitHub). If you prefer to work locally first, you must install the madoko-local command-line tool.
 
