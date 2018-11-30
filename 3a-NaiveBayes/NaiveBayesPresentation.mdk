@@ -1,5 +1,5 @@
 [INCLUDE=presentation]
-Title         : Introduction to Naive Bayes Algorithm
+Title         : Finish kNN, Introduction to Naive Bayes Algorithm
 Sub Title     : 
 Author        : Jaya Nilakantan
 Affiliation   : Dawson College
@@ -18,8 +18,8 @@ We've seen 2 algorithms thus far:
 
 Both algorithms are used with supervised learning: assumes labeled data
 
-# How to choose $k$ in knn?
-We saw that the knn algorithm is sensitive to the value of $k$
+# How to choose $k$ in kNN?
+We saw that the kNN algorithm is sensitive to the value of $k$
 
 Different results can occur depending on:
 
@@ -31,24 +31,175 @@ In other words, the accuracy of the results depends on the value of $k$. We need
 
 # Optimizing $k$
 There isn't a general formula to determine the best value of $k$. Instead, you need to tune $k$ for each data set that you are 
-examining.
+examining. 
+
+We need to tune $k$ in the same way that we tune the weights $w_i$
 
 The common methodology used is called *k-fold cross validation*
 
-The idea:
+# k-fold cross validation
 
-* split your training data into a bunch of random, equal sized groups (called *folds*, there are *k* of them, but *k* refers to a
-different variable than the *k* in knn, ran out of letters I suppose!)
+* split your training data into a bunch of random, equal sized groups (called *folds*, there are *k* of them. Beware, *k* refers to a
+different variable than the *k* in kNN!)
 
 * use one of the folds as the "validation" data, and the remaining folds as the "training" data: run through different values
-of k in knn, and assess the accuracy
+of k in kNN, and assess the accuracy
 
-* repeat this for e
+* repeat this for every fold (i.e., each fold takes a turn being the validation data)
 
-# k-fold cross validation
-The idea: 
-$k$ is a variable that must be 
-# Madoko Presentation
+# Visualization
+
+![k_fold_cv]
+
+[k_fold_cv]: images/k_fold_cv.jpg "k_fold_cv" { width:auto; max-width:90% }
+
+
+# Pseudo code
+```
+Initialize value of k-fold
+Split test data into k-fold folds
+for each fold
+  for loop to iterate through different values for kNN's k
+    the iterating fold is the validation fold, all remaining folds are training data
+    use the data in the validation fold to count the number of errors
+  save the accuracy rate for that k
+select the k with the best accuracy
+```
+
+# How would you use kNN for text classification?
+
+1. Transform the text into numeric vectors
+
+2. use a distance metric to calculate the closest neighbours
+
+kNN classification assumes that similarity can be found be proximity. How can the vectors be formed so that 
+proximity is meaningful?
+
+# Example - Bag of Words
+One way is to convert the text into associate arrays, where the word is the key, and the value is the frequency
+with which the word appeared in the text.
+
+Text: John likes to watch movies. Mary likes movies too.
+
+BoW = {"John":1, "likes":2, "to":1, "watch":1, "movies":2, "Mary":1, "too":1};
+
+The array doesn't necessarily keep the order of the words, just the frequency.
+
+Terms which appear in a text and have a higher frequency in one class of bags over another 
+can be thought of as being closer to that bag.
+
+# Naive Bayes classifiers
+Naive Bayes classifiers are probabilistic classifiers
+
+Bayes refers to Bayes theorem which defines a relation between conditional probabilities.
+
+Naive refers to the fact that the features are independant (which is a big assumption)
+
+# Bayes Theorem
+
+This [video] has an easy to understand explanation.
+
+[video]: https://www.khanacademy.org/partner-content/wi-phi/wiphi-critical-thinking/wiphi-fundamentals/v/bayes-theorem
+
+# Time for math!
+
+~ Begin Framed { padding:1ex; margin-top:1ex }
+The Bayes theorem states
+
+~ Math  {#eq-bayes}
+P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)}
+~
+~ End Framed
+
+# Why is this useful?
+
+Let's say we want to classify e-mails into classes $c$ (e.g., spam, not spam)
+
+There are features $x_i$ (basically the words) that define e-mails 
+
+We know the unconditional probabilities $P(c)$ for each class
+
+* this is simply the frequency with which spam and not-spam appears in our training set
+
+
+We know the conditional probability $P(x_i \mid c)$ for each feature and class
+
+* this is the frequency of the occurrence of the word in each class
+
+* we interpret this as a measure of how much evidence that particular feature contributes to $c$ being the correct class
+
+# Calculation of $P(c \mid x)$
+
+We want to calculate the probability that a given email is spam. We are interested in:
+
+~ Begin Framed { padding:1ex; margin-top:1ex }
+The calculation of the conditional probability that the class is $c$, given the words $x_i$ in the email:
+
+~ Math  {#eq-bayes-complex}
+P(c \mid x_1, x_2, ... x_n) = \frac{P(x_1,x_2, ... x_n \mid c) \, P(c)}{P(x_1,x_2, ... x_n)}
+~
+
+Notice the denominator doesn't depend on the class, and is effectively constant when I am comparing is a
+text belongs to one class or another. So we can ignore it since it doesn't change which class will have the
+higher probability
+
+~ End Framed
+
+<!--
+# Law of Total Probability
+
+~ Begin Framed { padding:1ex; margin-top:1ex }
+This law breaks up a probability into distinct smaller parts. In general terms:
+
+~ Math  {#eq-total-prob1}
+P(x) = \sum_{i=1}^n P(x \mid A_i) P(A_i)
+~
+
+or, for our purposes
+~ Math  {#eq-total-prob2}
+P(x_1,x_2, ... x_n) = {\sum_{i=1}^n P(x_1, ... x_n \mid c = i) P(c = i)}
+~
+
+~ End Framed
+-->
+# Now consider the naive part
+
+The Naive Bayes model, which we are using, assumes every feature is independant of each other.
+
+In other words, it assumes $x_i$ are all independant, meaning their probabilities don't impact each other
+
+This means that:
+
+~ Begin Framed { padding:1ex; margin-top:1ex }
+Since the features $x_i$ are assumed to be independant
+
+~ Math  {#eq-naive-bayespartial}
+P(x_1, ... x_n \mid c) = P(x_1|c)⋅P(x_2|c)⋅⋅⋅P(x_n|c)
+~
+
+~ End Framed
+
+# So we can rewrite the Bayes equation:
+
+~ Begin Framed { padding:1ex; margin-top:1ex }
+
+~ Math  {#eq-bayes-complex-2}
+P(c = j \mid x_1, ... x_n) = P(x_1|c = i)⋅P(x_2|c = i)⋅⋅⋅P(x_n|c = i) P(c = j)
+~
+~ End Framed
+
+# Now consider the naive part
+
+
+
+
+
+
+
+
+
+
+
 
 Using [Madoko] it is easy to create beautiful presentations.
 
@@ -249,3 +400,16 @@ where you may use something like:
 [slide]: http://research.microsoft.com/en-us/um/people/daan/madoko/samples/slidedemo/out/slidedemo.html
 [slide-mdk]: https://www.madoko.net/editor.html?#url=http://research.microsoft.com/en-us/um/people/daan/madoko/samples/slidedemo/slidedemo.mdk&options={"delayedUpdate":"true"}
 [slide-pdf]: http://research.microsoft.com/en-us/um/people/daan/madoko/samples/slidedemo/out/slidedemo.pdf
+
+# References {-}
+
+https://kevinzakka.github.io/2016/07/13/k-nearest-neighbor/#more-on-k
+
+https://en.wikipedia.org/wiki/Bag-of-words_model
+
+https://nlp.stanford.edu/IR-book/html/htmledition/naive-bayes-text-classification-1.html
+
+https://srdas.github.io/MLBook/BayesModels.html#bayes-classifier
+
+https://en.wikipedia.org/wiki/Law_of_total_probability
+
