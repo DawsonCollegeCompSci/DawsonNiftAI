@@ -111,7 +111,31 @@ P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)}
 ~
 ~ End Framed
 
-# Why is this useful?
+# Simple [example 1]
+Based on the weather (feature), the kids either played outside or not (class). We have collected past data, and want to predict the likelihood of them playing outside given the weather.
+
+![Capture]
+
+1. What are the overall frequencies for each class?
+2. What are the estimated probabilities for each class P(c)
+
+[Capture]: images/Capture.PNG "Capture" { width:auto; max-width:90% }
+
+# Continuing [example 1]
+If it is sunny, will the kids play outside?
+~ Math
+\begin{aligned}
+P(Yes | Sunny) &= \frac{P (Sunny | Yes) * P (Yes) }{P(Sunny)}\\
+&= ((3/9) * (9/14))/(5/14) = 0.6\\
+P(No | Sunny) &= \frac{P (Sunny | No) * P (No)}{P(Sunny)} \\
+&= ((2/5) * (5/14))/(5/14) = 0.4
+\end{aligned}
+~
+So the children are more likely to play outside.
+
+[Example 1]: https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/
+
+# Application to text classification?
 
 Let's say we want to classify e-mails into classes $c$ (e.g., spam, not spam)
 
@@ -253,35 +277,13 @@ P(Not China | Doc 5) = $(2/9)^3 * 2/9 * 2/9 * 1/4$ ~= 0.0001
 
 Thus the Naive Bayes classifier will assign "China" as the class for the text since the probability is higher
 
-# Another [example 2]
-Based on the weather (feature), the kids either played outside or not (class). We have collected past data, and want to predict the likelihood of them playing outside given the weather.
-
-![Capture]
-
-1. What are the overall frequencies for each class?
-2. What are the probabilities for each class P(c)
-
-[Capture]: images/Capture.PNG "Capture" { width:auto; max-width:90% }
-
-# Continuing [example 2]
-If it is sunny, will the kids play outside?
-~ Math
-\begin{aligned}
-P(Yes | Sunny) &= P (Sunny | Yes) * P (Yes) \\
-&= ((3+1)/9) * (9/14) = 0.285\\
-P(No | Sunny) &= P (Sunny | No) * P (No) \\
-&= ((2+1)/5) * (5/14) = 0.214
-\end{aligned}
-~
-So the children are more likely to play outside.
-
-[Example 2]: https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/
 
 # Working with a real example
 
 [NY Times] offers a wonderful set of APIs to beautiful labelled data. 
 
-Get an API key, and play around. I am using data extracted previously (by [Hilary Mason]) that has 50 article snippets related tp Arts, and 50 related to Sports.
+Get an API key, and play around. I am using data extracted previously (by [Hilary Mason]) that has 47
+ article snippets related tp Arts, and 47 related to Sports.
 
 You will use these as training data for a Naive Bayes classifier, which takes a sentence and decides if it is more
 likely to be Arts-related or Sports-related
@@ -295,15 +297,33 @@ $P(Arts) = P(Sports) = 0.5$
 since we chose equal number of articles. If this is not a good assumption, we should
 rethink our training data.
 
-Count the number of words associated with Arts
+## Training
 
-Count the number of words associated with Sports
+Separate the text into words
 
-Counts the overall number of unique words in the training set
+Ignore words like "the" and "a"
 
-For every word in the entered sentence: count the occurences in Arts plus 1
+Fill two associate arrays, one for arts, one for sport. 
 
-Repeat for Sports
+* key is a word, value is the frequency
+
+* PHP arrays are hashmaps internally, so we will have O(1) access time later
+
+* no need to sort at training
+
+Count the number of words associated with Arts: sum of all values
+
+Count the number of words associated with Sports: sum of all values
+
+Count the overall number of unique words in the training set: count of all keys
+
+## Testing
+
+Separate the text into words
+
+Sum the frequency of the words in Arts plus 1
+
+Sum the frequency of the words in Sports plus 1
 
 Use these to calculate which has a higher probability
 
